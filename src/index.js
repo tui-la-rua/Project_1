@@ -5,8 +5,7 @@ const app = express()
 const morgan = require('morgan')
 const exphbs = require('express-handlebars')
 const route = require('./routes')
-const NewsController = require('./app/controllers/NewsControllers');
-const router = require('./routes/news');
+
 const db = require('./config/db/index')
 
 
@@ -17,17 +16,11 @@ const db = require('./config/db/index')
 // connect to db
 db.connect();
 
-
-
-
-
-app.use('/', router);
-
-
 // cấu hình file tĩnh
 app.use(express.static(path.join(__dirname, 'public')))
-router.get('/news', NewsController.index)
 
+
+route(app);
 
 app.engine('handlebars', engine({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars')
